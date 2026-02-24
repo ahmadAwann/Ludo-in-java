@@ -301,7 +301,7 @@ public class GameLogic {
     // move next method
     private void moveNextTurn(Player player, LudoBoard board, LudoGUI gui) {
         // delay
-        new javax.swing.Timer(0, new ActionListener() {
+        new javax.swing.Timer(  1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ((javax.swing.Timer) e.getSource()).stop(); // stops timer...
