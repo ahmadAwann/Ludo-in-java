@@ -1,0 +1,64 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+abstract class GameBoards {
+  - board: Cell[][]
+  + populateBoard()
+  + displayBoard()
+}
+
+interface GameTokens {
+  + move(spaces: int)
+}
+
+class LudoBoard {
+  + populateBoard()
+  + displayBoard()
+}
+
+class Player {
+  - playerRoad: int[56]
+  - playerName: String
+  - color: String
+  - score: int
+  - tokensOnBoard: int
+  + recordTurn()
+}
+
+class Token {
+  - position: int
+  - color: String
+  - isTokenHome: boolean
+  - isTokenWon: boolean
+  + isHome(): boolean
+  + isWon(): boolean
+  + move(spaces: int)
+}
+
+class Dice {
+  - diceNum: int
+  + roll(): int
+}
+
+class Cell {
+  + isCellSafe(): boolean
+  + isCellEmpty(): boolean
+  + bulkMethod()
+}
+
+class GameLogic {
+  - players: Player[]
+  + playerTurn(player: Player, board: LudoBoard)
+  + isGameOver(): boolean
+}
+
+' Relationships
+LudoBoard --|> GameBoards
+Token ..|> GameTokens
+
+Player "1" *-- "4" Token : has
+LudoBoard "1" o-- "*" Cell : contains
+GameLogic --> Player : uses
+GameLogic --> LudoBoard : uses
+Dice ..> GameLogic : rolls
+
+@enduml

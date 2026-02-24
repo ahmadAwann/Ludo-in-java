@@ -1,0 +1,74 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+' -----------------------------
+
+' Scale down for A4
+skinparam dpi 150
+skinparam classAttributeIconSize 0
+skinparam classFontSize 11
+skinparam classAttributeFontSize 10
+skinparam classMethodFontSize 10
+
+class GameRunner {
+  + runGame(): void
+}
+
+class GameLogic {
+  + initializeBoardAndPlayers(): void
+  + playerTurn(player: Player, board: LudoBoard, gui: LudoGUI): void
+  + moveTokens(player: Player, diceScore: int, board: LudoBoard): void
+  + isGameOver(player: Player): boolean
+  + displayTokensAtHome(): void
+}
+
+class LudoBoard {
+  + displayBoard(currentPlayer: Player, gui: LudoGUI): void
+  + initializeSlots(gui: LudoGUI): void
+  + populateBoard(): void
+  + setSafeSlots(): void
+}
+
+class Player {
+  + playerTurn(): void
+  + getScore(): int
+  + setScore(score: int): void
+  + bulkMove(): void
+  + canAnotherTokenMove(score: int): boolean
+}
+
+class Token {
+  + move(spaces: int, player: Player, board: LudoBoard, players: Player[], gui: LudoGUI): void
+  + setRowColumn(position: int, player: Player, board: LudoBoard): void
+  + resetToken(): void
+  + killMethod(): void
+}
+
+interface GameTokens {
+  + move(spaces: int, player: Player, board: LudoBoard, players: Player[], gui: LudoGUI): void
+}
+
+class Dice {
+  + roll(): int
+}
+
+class LudoGUI {
+  + initializeGUI(): void
+  + updateBoard(): void
+  + animateTokens(): void
+  + displayScores(): void
+}
+
+' Inheritance
+Token ..|> GameTokens
+
+' Associations & Aggregations
+GameRunner --> GameLogic
+GameLogic --> LudoBoard
+GameLogic --> Player
+GameLogic --> Dice
+GameLogic --> LudoGUI
+Player "1" o-- "4" Token
+LudoBoard "1" *-- "*" Cell
+LudoGUI --> LudoBoard
+
+@enduml

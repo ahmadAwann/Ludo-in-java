@@ -1,0 +1,37 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+start
+:Initialize players;
+while (true)
+  :Player's turn;
+  :Roll dice;
+  if (Dice == 6?) then (yes)
+    :Check token out?;
+    if (No token out) then (yes)
+      :Auto move token out;
+      :Roll again;
+    else (no)
+      :Player chooses: Move token or bring out new;
+      :If bring out new: Move token out;
+      :Roll again;
+    endif
+  endif
+  :Move token;
+  :Check cell status (Safe/Kill/Bulk/Empty);
+  if (Kill or Token Reached Home?) then (yes)
+    if (Is this the 4th token?) then (yes)
+      :No extra roll;
+    else (no)
+      :Give extra roll;
+    endif
+  endif
+  :Check isGameOver();
+  if (Game over?) then (yes)
+    :Declare Winner;
+    break
+  else (no)
+    --> :Next player turn;
+  endif
+endwhile
+stop
+@enduml
